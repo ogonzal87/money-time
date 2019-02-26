@@ -204,7 +204,7 @@ class CalculatorForm extends React.Component {
 
 				<div style={{
 					width: `100%`,
-					margin: `40px 0 0 0 `,
+					margin: `40px 0 `,
 					float: `right`
 				}}>
 					<DSButton
@@ -214,7 +214,11 @@ class CalculatorForm extends React.Component {
           </DSButton>
 				</div>
 
-			</form>
+				<p className="calculator-disclaimer-text">* These are estimates based on average salaries in the Bay Area and do not reflect the opportunity costs incurred by attending each meeting. For recreational purposes only and should not be used to discourage meetings but rather to be mindful of their purpose and other people’s time. Time = <span role="img" aria-labelledby="money">💵</span> and the users we design for end up paying for it one way or another. Do *not* take it too seriously <span role="img" aria-labelledby="crazy face">😜</span>.</p>
+
+				<p className="calculator-disclaimer-text">Built using <a href="https://oskrhq-ds.surge.sh" target="_blank" rel="noopener noreferrer">OSKRHQ.DS</a>.</p>
+
+			</form >
 		)
 	}
 }
