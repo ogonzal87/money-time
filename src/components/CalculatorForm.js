@@ -1,13 +1,13 @@
 import React from 'react'
 import { DSButton } from "oskrhq-design-system";
 
-
 class CalculatorForm extends React.Component {
 	state = {
 		calculatedAmount: 0
 	}
 
 	meetingDurationRef = React.createRef()
+	amountDesignDirectorsRef = React.createRef()
 	amountPrincipalDesignersRef = React.createRef()
 	amountStaffDesignersRef = React.createRef()
 	amountSeniorDesignersRef = React.createRef()
@@ -15,6 +15,7 @@ class CalculatorForm extends React.Component {
 	amountAssociateDesignersRef = React.createRef()
 
 	salaries = {
+		directorDesigner: 230000,
 		principalDesigner: 190000,
 		staffDesigner: 180000,
 		seniorDesigner: 160000,
@@ -31,22 +32,25 @@ class CalculatorForm extends React.Component {
 		return minute
 	}
 
-
-
 	calculate = (e) => {
 		// 1. Prevent the form from submitting 
 		e.preventDefault()
 
 		const {
 			meetingDurationRef,
+			amountDesignDirectorsRef = 0,
 			amountPrincipalDesignersRef = 0,
 			amountStaffDesignersRef = 0,
 			amountSeniorDesignersRef = 0,
 			amountDesignersRef = 0,
-			amountAssociateDesignersRef = 0 } = this
+			amountAssociateDesignersRef = 0,
+			salaries,
+			calculateSalaryInMinutes
+		} = this
 
 		const meeting = {
 			meetingDurationRef: meetingDurationRef.current.value,
+			amountDirectorDesigners: amountDesignDirectorsRef.current.value,
 			amountPrincipalDesigners: amountPrincipalDesignersRef.current.value,
 			amountStaffDesigners: amountStaffDesignersRef.current.value,
 			amountSeniorDesigners: amountSeniorDesignersRef.current.value,
@@ -54,18 +58,21 @@ class CalculatorForm extends React.Component {
 			amountAssociateDesigners: amountAssociateDesignersRef.current.value,
 		}
 
-		let salaryInMinutesPrincipalDesigner = this.calculateSalaryInMinutes(this.salaries.principalDesigner)
-		let salaryInMinutesStaffDesigner = this.calculateSalaryInMinutes(this.salaries.staffDesigner)
-		let salaryInMinutesSeniorDesigner = this.calculateSalaryInMinutes(this.salaries.seniorDesigner)
-		let salaryInMinutesDesigner = this.calculateSalaryInMinutes(this.salaries.designer)
-		let salaryInMinutesAssociateDesigner = this.calculateSalaryInMinutes(this.salaries.associateDesigner)
+		let salaryInMinutesDirectorDesigner = calculateSalaryInMinutes(salaries.directorDesigner)
+		let salaryInMinutesPrincipalDesigner = calculateSalaryInMinutes(salaries.principalDesigner)
+		let salaryInMinutesStaffDesigner = calculateSalaryInMinutes(salaries.staffDesigner)
+		let salaryInMinutesSeniorDesigner = calculateSalaryInMinutes(salaries.seniorDesigner)
+		let salaryInMinutesDesigner = calculateSalaryInMinutes(salaries.designer)
+		let salaryInMinutesAssociateDesigner = calculateSalaryInMinutes(salaries.associateDesigner)
+
+		let costPerMeetingPerDirectorDesigner = salaryInMinutesDirectorDesigner * meeting.meetingDurationRef
 		let costPerMeetingPerPrincipalDesigner = salaryInMinutesPrincipalDesigner * meeting.meetingDurationRef
 		let costPerMeetingPerStaffDesigner = salaryInMinutesStaffDesigner * meeting.meetingDurationRef
 		let costPerMeetingPerSeniorDesigner = salaryInMinutesSeniorDesigner * meeting.meetingDurationRef
 		let costPerMeetingPerDesigner = salaryInMinutesDesigner * meeting.meetingDurationRef
 		let costPerMeetingPerAssociateDesigner = salaryInMinutesAssociateDesigner * meeting.meetingDurationRef
 
-
+		let diretorDesignersCost = (costPerMeetingPerDirectorDesigner * meeting.amountDirectorDesigners)
 		let principalDesignersCost = (costPerMeetingPerPrincipalDesigner * meeting.amountPrincipalDesigners)
 		let staffDesignersCost = (costPerMeetingPerStaffDesigner * meeting.amountStaffDesigners)
 		let seniorDesignersCost = (costPerMeetingPerSeniorDesigner * meeting.amountSeniorDesigners)
@@ -73,7 +80,9 @@ class CalculatorForm extends React.Component {
 		let associateDesignersCost = (costPerMeetingPerAssociateDesigner * meeting.amountAssociateDesigners)
 
 		this.setState({
-			calculatedAmount: principalDesignersCost +
+			calculatedAmount:
+				diretorDesignersCost +
+				principalDesignersCost +
 				staffDesignersCost +
 				seniorDesignersCost +
 				designersCost +
@@ -87,6 +96,8 @@ class CalculatorForm extends React.Component {
 			currency: "USD"
 		})
 	}
+
+	// TODO: Componetize the elements below...
 
 	render() {
 		let calculatedCostPerOccurance = this.state.calculatedAmount
@@ -130,6 +141,19 @@ class CalculatorForm extends React.Component {
 						<span>
 							<i className="material-icons ds-icon-small ds-select-chevron-down">keyboard_arrow_down</i>
 						</span>
+					</div>
+				</div>
+
+				<div className="participant-row">
+					<p className="ds-overline-text-style">Design Director/Manager</p>
+					<div className="ds-input-text-container">
+						<input
+							className="ds-input-field "
+							name="participantAmount"
+							placeholder="Number"
+							type="number"
+							ref={this.amountDesignDirectorsRef}
+						/>
 					</div>
 				</div>
 
@@ -214,7 +238,7 @@ class CalculatorForm extends React.Component {
           </DSButton>
 				</div>
 
-				<p className="calculator-disclaimer-text">* These are estimates based on average salaries in the Bay Area and do not reflect the opportunity costs incurred by attending each meeting. For recreational purposes only and should not be used to discourage meetings but rather to be mindful of their purpose and other people’s time. Time = <span role="img" aria-labelledby="money">💵</span> and the users we design for end up paying for it one way or another. Do *not* take it too seriously <span role="img" aria-labelledby="crazy face">😜</span>.</p>
+				<p className="calculator-disclaimer-text">* These are estimates based on average salaries in the Bay Area and do not reflect the opportunity costs incurred by attending each meeting or other variables. For recreational purposes only and should not be used to discourage meetings but rather to be mindful of their purpose and other people’s time. Time = <span role="img" aria-labelledby="money">💵</span> and the users we design for end up paying for it one way or another. Do *not* take it too seriously <span role="img" aria-labelledby="crazy face">😜</span>.</p>
 
 				<p className="calculator-disclaimer-text">Built using <a href="https://oskrhq-ds.surge.sh" target="_blank" rel="noopener noreferrer">OSKRHQ.DS</a>.</p>
 
