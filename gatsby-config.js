@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Money Time`,
-    description: `Find out how much a meeting costs...`,
+    description: `Find out how much does a design meeting in the Bay Area costs...`,
     author: `@ogonzal87`,
   },
   plugins: [
