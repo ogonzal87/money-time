@@ -4,7 +4,6 @@
     ```sh
     yarn install
     ```
-
 1.  **Run**
     ```sh
     yarn start
@@ -15,3 +14,5 @@
     cd public/
     surge
     ```
+
+ ![Example of how it works](./example.gif)
