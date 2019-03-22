@@ -15,12 +15,12 @@ class CalculatorForm extends React.Component {
 	amountAssociateDesignersRef = React.createRef()
 
 	salaries = {
-		directorDesigner: 230000,
-		principalDesigner: 190000,
-		staffDesigner: 180000,
+		directorDesigner: 250000,
+		principalDesigner: 200000,
+		staffDesigner: 185000,
 		seniorDesigner: 160000,
-		designer: 130000,
-		associateDesigner: 90000
+		designer: 145000,
+		associateDesigner: 122500
 	}
 
 	calculateSalaryInMinutes = (sal) => {
