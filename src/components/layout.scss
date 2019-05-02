@@ -95,11 +95,11 @@ body {
 }
 
 .calculator-disclaimer-text {
-  font-size: ds-font-size(caption);
+  font-size: ds-font-size(caption) * .75;
 }
 
 .error-message {
-  font-size: ds-font-size(caption) * .78;
+  font-size: ds-font-size(caption) * .85;
   margin: 0;
   color: ds-color(danger, 500)
 }
