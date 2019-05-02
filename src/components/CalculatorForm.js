@@ -1,9 +1,11 @@
 import React from 'react'
 import { DSButton } from "oskrhq-design-system";
+import Footer from "./Footer";
 
 class CalculatorForm extends React.Component {
 	state = {
-		calculatedAmount: 0
+		calculatedAmount: 0,
+		invalidForm: false
 	}
 
 	meetingDurationRef = React.createRef()
@@ -32,9 +34,22 @@ class CalculatorForm extends React.Component {
 		return minute
 	}
 
+	validateForm = (e) => {
+		if (this.meetingDurationRef.current.value !== "Select...") {
+			console.log(this.meetingDurationRef.current.value)
+			console.log('The form is valid!')
+			e.preventDefault()
+			this.calculate(e);
+			this.setState({ invalidForm: false })
+		} else {
+			console.error('The form is Invalid!')
+			e.preventDefault()
+			this.setState({ invalidForm: true })
+		}
+	}
+
 	calculate = (e) => {
 		// 1. Prevent the form from submitting 
-		e.preventDefault()
 
 		const {
 			meetingDurationRef,
@@ -103,7 +118,7 @@ class CalculatorForm extends React.Component {
 		let calculatedCostPerOccurance = this.state.calculatedAmount
 
 		return (
-			<form className="app-container" onSubmit={this.calculate}>
+			<form className="app-container" onSubmit={this.validateForm}>
 
 				<div className="amounts-container">
 					<label className="ds-overline-text-style">Meeting Cost</label>
@@ -123,13 +138,14 @@ class CalculatorForm extends React.Component {
 				</div>
 
 				<div className="participant-row">
-					<div className="ds-input-select-container">
+					<div className="ds-input-select-container meeting-duration-input">
 						<label className="ds-input-label ds-body2-text-style">Meeting Duration</label>
 						<select
 							label="Meeting Duration"
 							ref={this.meetingDurationRef}
 							name="meetingDuration"
 							className="ds-input-field ds-body1-text-style"
+							autoFocus
 						>
 							<option defaultValue>Select...</option>
 							<option value="15">15 minutes</option>
@@ -144,87 +160,92 @@ class CalculatorForm extends React.Component {
 					</div>
 				</div>
 
-				<div className="participant-row">
-					<p className="ds-overline-text-style">Design Director/Manager</p>
-					<div className="ds-input-text-container">
-						<input
-							className="ds-input-field "
-							name="participantAmount"
-							placeholder="Number"
-							type="number"
-							ref={this.amountDesignDirectorsRef}
-						/>
+				{this.state.invalidForm ? (<p className="error-message">You forgot to choose the meeting duration...</p>) : ''}
+
+				<div className="participants-input-container">
+					<div className="participant-row">
+						<p className="ds-overline-text-style">Design Director/Manager</p>
+						<div className="ds-input-text-container">
+							<input
+								className="ds-input-field"
+								name="participantAmount"
+								placeholder="Number"
+								type="number"
+								ref={this.amountDesignDirectorsRef}
+							/>
+						</div>
+					</div>
+
+					<div className="participant-row">
+						<p className="ds-overline-text-style">Principal Designers</p>
+						<div className="ds-input-text-container">
+							<input
+								className="ds-input-field "
+								name="participantAmount"
+								placeholder="Number"
+								type="number"
+								ref={this.amountPrincipalDesignersRef}
+							/>
+						</div>
+					</div>
+
+					<div className="participant-row">
+						<p className="ds-overline-text-style">Staff Designers</p>
+
+						<div className="ds-input-text-container">
+							<input
+								className="ds-input-field "
+								name="participantAmount"
+								type="number"
+								placeholder="Number"
+								ref={this.amountStaffDesignersRef}
+							/>
+						</div>
+					</div>
+
+					<div className="participant-row">
+						<p className="ds-overline-text-style">Senior Designers</p>
+
+						<div className="ds-input-text-container">
+							<input
+								className="ds-input-field "
+								name="participantAmount"
+								type="number"
+								placeholder="Number"
+								ref={this.amountSeniorDesignersRef}
+							/>
+						</div>
+					</div>
+
+					<div className="participant-row">
+						<p className="ds-overline-text-style">Designers</p>
+
+						<div className="ds-input-text-container">
+							<input
+								className="ds-input-field"
+								name="participantAmount"
+								type="number"
+								placeholder="Number"
+								ref={this.amountDesignersRef}
+							/>
+						</div>
+					</div>
+
+					<div className="participant-row">
+						<p className="ds-overline-text-style">Associate Designers</p>
+
+						<div className="ds-input-text-container">
+							<input
+								className="ds-input-field "
+								name="participantAmount"
+								type="number"
+								placeholder="Number"
+								ref={this.amountAssociateDesignersRef}
+							/>
+						</div>
 					</div>
 				</div>
 
-				<div className="participant-row">
-					<p className="ds-overline-text-style">Principal Designers</p>
-					<div className="ds-input-text-container">
-						<input
-							className="ds-input-field "
-							name="participantAmount"
-							placeholder="Number"
-							type="number"
-							ref={this.amountPrincipalDesignersRef}
-						/>
-					</div>
-				</div>
-
-				<div className="participant-row">
-					<p className="ds-overline-text-style">Staff Designers</p>
-
-					<div className="ds-input-text-container">
-						<input
-							className="ds-input-field "
-							name="participantAmount"
-							type="number"
-							placeholder="Number"
-							ref={this.amountStaffDesignersRef}
-						/>
-					</div>
-				</div>
-
-				<div className="participant-row">
-					<p className="ds-overline-text-style">Senior Designers</p>
-
-					<div className="ds-input-text-container">
-						<input
-							className="ds-input-field "
-							name="participantAmount"
-							type="number"
-							placeholder="Number"
-							ref={this.amountSeniorDesignersRef}
-						/>
-					</div>
-				</div>
-
-				<div className="participant-row">
-					<p className="ds-overline-text-style">Designers</p>
-
-					<div className="ds-input-text-container">
-						<input
-							className="ds-input-field "
-							name="participantAmount"
-							type="number"
-							placeholder="Number"
-							ref={this.amountDesignersRef}
-						/>
-					</div>
-				</div>
-
-				<div className="participant-row">
-					<p className="ds-overline-text-style">Associate Designers</p>
-
-					<div className="ds-input-text-container">
-						<input
-							className="ds-input-field "
-							name="participantAmount"
-							type="number"
-							placeholder="Number"
-							ref={this.amountAssociateDesignersRef}
-						/>
-					</div>
-				</div>
 
 				<div style={{
 					width: `100%`,
@@ -238,9 +259,7 @@ class CalculatorForm extends React.Component {
           </DSButton>
 				</div>
 
-				<p className="calculator-disclaimer-text">* These are estimates based on average salaries in the Bay Area and do not reflect the opportunity costs incurred by attending each meeting or other variables. For recreational purposes only and should not be used to discourage meetings but rather to be mindful of their purpose and other people’s time. Time = <span role="img" aria-labelledby="money">💵</span> and the users we design for end up paying for it one way or another.</p>
-
-				<p className="calculator-disclaimer-text">Built using <a href="https://oskrhq-ds.surge.sh" target="_blank" rel="noopener noreferrer">OSKRHQ.DS</a>.</p>
+				<Footer />
 
 			</form >
 		)

@@ -69,16 +69,37 @@ body {
 
 .ds-input-select-container {
   width: 100%;
-  margin: ds-space(loose) 0 ds-space(loose) 0;
+  margin: ds-space(loose) 0 ds-space(extra-tight) 0;
+  
+  select:focus {
+    border: none;
+    border: 1px solid ds-color(secondary, 500);
+  }
+}
+
+.participants-input-container {
+  margin-top: ds-space(loose);
 }
 
 .ds-input-text-container {
   margin: 0;
+
   .ds-input-field {
     width: 100px;
+    
+    &:focus {
+      border: none;
+      border: 1px solid ds-color(secondary, 500);
+    }
   }
 }
 
 .calculator-disclaimer-text {
   font-size: ds-font-size(caption) * .75;
+}
+
+.error-message {
+  font-size: ds-font-size(caption) * .78;
+  margin: 0;
+  color: ds-color(danger, 500)
 }
