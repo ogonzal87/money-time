@@ -25,12 +25,14 @@ class CalculatorForm extends React.Component {
   }
 
   calculateSalaryInMinutes = sal => {
-    let month = sal / 12
-    let week = month / 4
-    let day = week / 5
-    let hour = day / 8
-    let minute = hour / 60
-    return minute
+    const workingDays = 248 // According to: https://www.timeanddate.com/date/workdays.html?d1=01&m1=01&y1=2022&d2=31&m2=12&y2=2022&ti=on&
+    const workingHoursInaDay = 8
+    const workingMinutesInAnHour = 60
+
+    let workingMinuteVal =
+      sal / workingDays / workingHoursInaDay / workingMinutesInAnHour
+
+    return workingMinuteVal
   }
 
   validateForm = e => {
@@ -140,23 +142,35 @@ class CalculatorForm extends React.Component {
     return (
       <form className="app-container" onSubmit={this.validateForm}>
         <div className="amounts-container">
-          <label className="og-overline-text-style">Meeting Cost</label>
-          <h1 className="highlighted-offset">
+          <label className="og-overline-text-style" htmlFor="meetingCost">
+            Meeting Cost
+          </label>
+          <h1 className="highlighted-offset" id="meetingCost">
             {this.formatDollarAmount(calculatedCostPerOccurance)}
           </h1>
         </div>
 
         <div className="supporting-amounts-container">
           <div className="supporting-amounts-row">
-            <label className="og-caption-text-style">Weekly Meeting</label>
-            <p className="og-caption-text-style highlighted-offset">
+            <label className="og-caption-text-style" htmlFor="weeklyMeeting">
+              Weekly Meeting
+            </label>
+            <p
+              className="og-caption-text-style highlighted-offset"
+              id="weeklyMeeting"
+            >
               {this.formatDollarAmount(calculatedCostPerOccurance * 52)} / year
             </p>
           </div>
 
           <div className="supporting-amounts-row">
-            <label className="og-caption-text-style">Biweekly Meeting</label>
-            <p className="og-caption-text-style highlighted-offset">
+            <label className="og-caption-text-style" htmlFor="biWeeklyMeeting">
+              Biweekly Meeting
+            </label>
+            <p
+              className="og-caption-text-style highlighted-offset"
+              id="biWeeklyMeeting"
+            >
               {this.formatDollarAmount(calculatedCostPerOccurance * 26)} / year
             </p>
           </div>
@@ -167,16 +181,18 @@ class CalculatorForm extends React.Component {
           style={{ borderBottom: 0, padding: 0 }}
         >
           <div className="og-input-select-container">
-            <label className="og-input-label og-body2-text-style">
+            <label
+              className="og-input-label og-body2-text-style"
+              htmlFor="meetingDuration"
+            >
               Meeting Duration
             </label>
             <div className="og-input-select-input-container">
               <select
                 label="Meeting Duration"
                 ref={this.meetingDurationRef}
-                name="meetingDuration"
+                id="meetingDuration"
                 className="og-input-field og-body1-text-style"
-                autoFocus
               >
                 <option defaultValue>Select...</option>
                 <option value="15">15 minutes</option>
@@ -196,8 +212,10 @@ class CalculatorForm extends React.Component {
 
         {this.state.invalidForm ? (
           <p className="error-message">
-            <span role="img">⛔️</span> You forgot to choose the meeting
-            duration...
+            <span role="img" aria-label="">
+              ⛔️
+            </span>{" "}
+            You forgot to choose the meeting duration...
           </p>
         ) : (
           ""
@@ -213,7 +231,7 @@ class CalculatorForm extends React.Component {
             </label>
             <input
               className="og-input-field "
-              name="amountDesignDirectorsRef"
+              id="amountDesignDirectorsRef"
               placeholder="Number"
               type="number"
               ref={this.amountDesignDirectorsRef}
@@ -229,7 +247,7 @@ class CalculatorForm extends React.Component {
             </label>
             <input
               className="og-input-field"
-              name="amountPrincipalDesignersRef"
+              id="amountPrincipalDesignersRef"
               placeholder="Number"
               type="number"
               ref={this.amountPrincipalDesignersRef}
@@ -246,7 +264,7 @@ class CalculatorForm extends React.Component {
 
             <input
               className="og-input-field  "
-              name="amountStaffDesignersRef"
+              id="amountStaffDesignersRef"
               type="number"
               placeholder="Number"
               ref={this.amountStaffDesignersRef}
@@ -263,7 +281,7 @@ class CalculatorForm extends React.Component {
 
             <input
               className="og-input-field  "
-              name="amountSeniorDesignersRef"
+              id="amountSeniorDesignersRef"
               type="number"
               placeholder="Number"
               ref={this.amountSeniorDesignersRef}
@@ -279,7 +297,7 @@ class CalculatorForm extends React.Component {
             </label>
             <input
               className="og-input-field"
-              name="amountDesignersRef"
+              id="amountDesignersRef"
               type="number"
               placeholder="Number"
               ref={this.amountDesignersRef}
@@ -296,7 +314,7 @@ class CalculatorForm extends React.Component {
 
             <input
               className="og-input-field "
-              name="amountAssociateDesignersRef"
+              id="amountAssociateDesignersRef"
               type="number"
               placeholder="Number"
               ref={this.amountAssociateDesignersRef}
