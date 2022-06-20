@@ -9,16 +9,17 @@
     "gatsby-plugin-manifest": "^2.0.19",
     "gatsby-plugin-offline": "^2.0.24",
     "gatsby-plugin-react-helmet": "^3.0.6",
-    "gatsby-plugin-sass": "^2.0.10",
     "gatsby-plugin-sharp": "^2.0.22",
     "gatsby-source-filesystem": "^2.0.22",
+    "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-transformer-sharp": "^2.1.14",
     "node-sass": "^4.11.0",
-    "oskrhq-design-system": "^3.6.5",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "sass": "^1.52.2",
+    "gatsby-plugin-sass": "^5.15.1"
   },
   "devDependencies": {
     "prettier": "^1.16.4"

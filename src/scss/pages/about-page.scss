@@ -1,0 +1,46 @@
+.about-page {
+  display: flex;
+  margin-top: 140px;
+  padding-bottom: 220px;
+  justify-content: center;
+  min-height: 100vh;
+
+  @include respond-to(phone) {
+    margin-top: $og-space-48;
+    height: 100%;
+    padding-left: $og-space-24;
+    padding-right: $og-space-24;
+  }
+
+  .img-container {
+    position: relative;
+  }
+
+  .profile-img {
+    max-width: 380px;
+    border-radius: 10px;
+    object-fit: cover;
+    // clip-path: polygon(53% 0, 100% 0, 100% 49%, 58% 100%, 0 100%, 0 49%);
+
+    @include respond-to(phone) {
+      display: block;
+      margin-top: og-space(space-64) * 1.5;
+      width: 100%;
+    }
+  }
+
+  .text-container {
+    padding: 0 og-space(space-48) * 1.1;
+    max-width: 60ch;
+    position: relative;
+
+    @include respond-to(phone) {
+      display: block;
+      padding: og-space(space-48) 0;
+
+      p {
+        @include og-text-style-body2();
+      }
+    }
+  }
+}

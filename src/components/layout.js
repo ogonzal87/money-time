@@ -16,25 +16,15 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <div>
-        <main style={{
-          display: `flex`,
-          alignItems: `center`,
-          justifyContent: `center`,
-        }}>
-
+        <main
+          style={{
+            display: `flex`,
+            alignItems: `center`,
+            justifyContent: `center`,
+          }}
+        >
           {children}
-
         </main>
-
-        <footer style={{
-          position: `fixed`,
-          bottom: `16px`,
-          left: `16px`,
-          opacity: `.60`
-        }} className="ds-caption-text-style">
-          Built by <a href="https://oskrhq.com/" rel="noopener noreferrer" target="_blank">Oscar Gonzalez</a>
-        </footer>
-
       </div>
     )}
   />

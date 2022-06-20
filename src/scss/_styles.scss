@@ -1,0 +1,361 @@
+@import "./og-ds-styles/_styles.scss";
+
+$breakpoints: (
+  phone: 767px,
+  tablet: 992px,
+  desktop: 1200px,
+);
+
+/// Mixin to manage responsive breakpoints
+/// @param {String} $breakpoint - Breakpoint name
+/// @require $breakpoints
+@mixin respond-to($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+  // If the key doesn't exist in the map
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+// Pages
+
+* {
+  -webkit-font-smoothing: subpixel-antialiased !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+html {
+  --og-brand-color1: #5900ff;
+  --og-brand-color2: #00fff0;
+  --og-brand-color3: #ff00ff;
+
+  background: og-color(background, app);
+
+  @include respond-to(phone) {
+    // padding: og-space(space-08);
+  }
+
+  .crafted-quote {
+    font-size: og-font-size(body1);
+    padding: og-space(space-24);
+    color: og-color(text, secondary);
+    font-style: italic;
+
+    @include respond-to(phone) {
+      font-size: og-font-size(subheading);
+      padding: og-space(space-08);
+    }
+  }
+
+  .strikethrough-text {
+    text-decoration: line-through;
+  }
+
+  .tag-container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: og-space(space-08);
+  }
+
+  .tag {
+    padding: og-space(space-08) og-space(space-16);
+    background-color: rgba(224, 224, 224, 0.6);
+    display: inline-block;
+    border-radius: og-shape(secondary);
+    font-size: og-font-size(caption);
+  }
+
+  .special-text-styling {
+    font-size: 14px;
+    color: #828890;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-top: 100px;
+    text-transform: uppercase;
+    font-weight: og-font-weight(normal);
+  }
+
+  li {
+    @include respond-to(phone) {
+      font-size: og-font-size(body2);
+    }
+  }
+
+  .highlighted-offset {
+    position: relative;
+    background-image: linear-gradient(
+      to right,
+      var(--og-brand-color2),
+      var(--og-brand-color2)
+    );
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 100% 8px;
+  }
+
+  .highlighted-offset-very-important {
+    font-weight: bold;
+    position: relative;
+    background-image: linear-gradient(
+      to right,
+      var(--og-brand-color2),
+      var(--og-brand-color2)
+    );
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 100% 8px;
+  }
+}
+
+::-moz-selection {
+  background: var(--og-brand-color2);
+}
+
+::selection {
+  background: var(--og-brand-color2);
+}
+
+.cursor {
+  position: fixed;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: og-rem(8px) solid var(--og-brand-color3);
+  pointer-events: none;
+  mix-blend-mode: difference;
+  background-blend-mode: difference;
+
+  @include respond-to(phone) {
+    display: none;
+  }
+}
+
+​ body {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(black, 0.03),
+    rgba(black, 0.03) 1px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+.marquee {
+  position: absolute;
+  top: 40px;
+  min-width: 100vw;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  height: initial;
+
+  @include respond-to(phone) {
+    top: 100px;
+  }
+}
+
+.marquee span {
+  display: inline-block;
+  z-index: 999;
+  line-height: 1.5;
+  will-change: transform;
+  animation: marquee 900s linear infinite;
+  color: var(--og-brand-color2);
+  font-size: 100px;
+  text-shadow: 5px 5px var(--og-brand-color1), 10px 10px var(--og-brand-color3);
+  font-family: "KemcoPixel";
+  letter-spacing: 6px;
+  line-height: 0.9;
+
+  .marquee-class {
+    top: -30px;
+
+    @include respond-to(phone) {
+      top: 0px;
+    }
+  }
+
+  @include respond-to(phone) {
+    font-size: 40px;
+    text-shadow: 2px 2px var(--og-brand-color1), 4px 4px var(--og-brand-color3);
+  }
+}
+
+.marquee-class {
+  top: -30px;
+
+  @include respond-to(phone) {
+    top: 50px;
+  }
+}
+
+.marquee span:hover {
+  animation-play-state: paused;
+}
+
+/* Make it move */
+
+@keyframes marquee {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+
+/* Respect user preferences about animations */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    white-space: normal;
+  }
+  .marquee span {
+    animation: none;
+    padding-left: 0;
+  }
+}
+
+.contact-me-circle-container {
+  // overflow: hidden;
+  position: fixed;
+  bottom: -90px;
+  right: -90px;
+
+  .contact-me-circle {
+    overflow: hidden;
+    mix-blend-mode: difference;
+    background-blend-mode: difference;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-weight: 700;
+    -webkit-animation-name: rotate;
+    -moz-animation-name: rotate;
+    -ms-animation-name: rotate;
+    -o-animation-name: rotate;
+    animation-name: rotate;
+    -webkit-animation-duration: 25s;
+    -moz-animation-duration: 25s;
+    -ms-animation-duration: 25s;
+    -o-animation-duration: 25s;
+    animation-duration: 25s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    -o-animation-timing-function: linear;
+    animation-timing-function: linear;
+    cursor: pointer;
+
+    a {
+      font-weight: 700;
+      fill: var(--og-brand-color3) !important;
+
+      &:visited {
+        fill: var(--og-brand-color3) !important;
+      }
+    }
+
+    text {
+      fill: var(--og-brand-color3) !important;
+      // fill: rgba(0, 0, 0, 0.3) !important;
+      // font-size: 16px;
+    }
+
+    @include respond-to(phone) {
+      display: none;
+    }
+  }
+
+  .contact-me-prompt-container {
+    z-index: 999;
+    text-decoration: none; // overflow: hidden;
+
+    img {
+      position: absolute;
+      bottom: 82px;
+      right: 20px;
+      width: 278px;
+      // opacity: 0;
+      // transition: all cubic-bezier(0.43, -0.5, 0.41, 2.34) 400ms;
+    }
+  }
+
+  &:hover {
+    .contact-me-prompt-container {
+      z-index: 999;
+      text-decoration: none;
+      overflow: hidden;
+
+      img {
+        // opacity: 1;
+        bottom: 80px;
+        right: 22px;
+        width: 280px;
+      }
+    }
+  }
+
+  .contact-me-circle:hover {
+    animation-play-state: paused;
+  }
+}
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0);
+  }
+}
+@-moz-keyframes rotate {
+  from {
+    -moz-transform: rotate(360deg);
+  }
+  to {
+    -moz-transform: rotate(0);
+  }
+}
+@-ms-keyframes rotate {
+  from {
+    -ms-transform: rotate(360deg);
+  }
+  to {
+    -ms-transform: rotate(0);
+  }
+}
+@-o-keyframes rotate {
+  from {
+    -o-transform: rotate(360deg);
+  }
+  to {
+    -o-transform: rotate(0);
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}

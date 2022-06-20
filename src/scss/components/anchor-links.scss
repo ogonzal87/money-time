@@ -1,0 +1,51 @@
+.anchor-links {
+  position: fixed;
+  height: 32px;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  z-index: 999;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 600px;
+  z-index: 999;
+
+  @include respond-to(phone) {
+    display: none;
+  }
+
+  a {
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+  }
+
+  .anchor-link {
+    width: 110px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    backdrop-filter: blur(6px);
+    text-decoration: none;
+    color: og-color(text, secondary);
+    transition: all 50ms ease-in-out;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(224, 224, 224, 0.6);
+    border-radius: og-shape(secondary);
+    font-size: og-font-size(caption);
+
+    &:hover {
+      color: og-color(text, link);
+      text-decoration: none;
+      border-radius: og-shape(tertiary);
+      font-weight: bold;
+      background-color: rgba(0, 255, 240, 0.5);
+      backdrop-filter: blur(6px);
+    }
+  }
+}
